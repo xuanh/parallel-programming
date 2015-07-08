@@ -1,6 +1,6 @@
 import actors.AssemblyWorkshop;
-import actors.CoachWorkProducer;
-import actors.CoachWorkWorkshop;
+import actors.CoachworkProducer;
+import actors.CoachworkWorkshop;
 import actors.EngineProducer;
 import actors.EngineWorkshop;
 import actors.FactoryActor;
@@ -31,8 +31,8 @@ public class CarFactory {
         ActorRef wheelWSRef = system.actorOf(Props.create(WheelWorkshop.class, assemblyRef));
         ActorRef wheelProducerRef = system.actorOf(Props.create(WheelProducer.class, wheelWSRef));
 
-        ActorRef coachworkWSRef = system.actorOf(Props.create(CoachWorkWorkshop.class, assemblyRef));
-        ActorRef coachworkProducerRef = system.actorOf(Props.create(CoachWorkProducer.class, coachworkWSRef));
+        ActorRef coachworkWSRef = system.actorOf(Props.create(CoachworkWorkshop.class, assemblyRef));
+        ActorRef coachworkProducerRef = system.actorOf(Props.create(CoachworkProducer.class, coachworkWSRef));
 
         system.scheduler().schedule(FiniteDuration.apply(0, TimeUnit.SECONDS), FiniteDuration.apply(4, TimeUnit.SECONDS), engineProducerRef, new Produce(defectPercentage),
                 system.dispatcher(), engineProducerRef);
