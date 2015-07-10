@@ -4,7 +4,6 @@ import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import messages.Car;
 import messages.Coachwork;
-import messages.Count;
 import messages.Engine;
 import messages.Wheel;
 
@@ -26,7 +25,6 @@ public class AssemblyWorkshop extends UntypedActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
-        Optional<Car> car;
         if (message instanceof Engine) {
             engines.add((Engine) message);
             assembleCarAndSendToFactory();
@@ -50,7 +48,7 @@ public class AssemblyWorkshop extends UntypedActor {
         return Optional.empty();
     }
 
-    private void assembleCarAndSendToFactory(){
+    private void assembleCarAndSendToFactory() {
         Optional<Car> car = assemble();
         if (car.isPresent()) {
             factory.tell(car.get(), this.getSelf());
