@@ -6,7 +6,7 @@ import messages.Produce;
 import messages.Wheel;
 
 public class WheelProducer extends UntypedActor{
-    ActorRef wheelWorkshop;
+    private ActorRef wheelWorkshop;
 
     public WheelProducer(ActorRef wheelWorkshop) {
         this.wheelWorkshop = wheelWorkshop;
@@ -23,7 +23,7 @@ public class WheelProducer extends UntypedActor{
             } else {
                 wheel = new Wheel(true);
             }
-            System.out.println("wheel produced:" + wheel);
+//            System.out.println("wheel produced:" + wheel);
             wheelWorkshop.tell(wheel, this.getSelf());
         } else {
             unhandled(message);

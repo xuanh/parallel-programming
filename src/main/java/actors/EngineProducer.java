@@ -6,7 +6,7 @@ import messages.Engine;
 import messages.Produce;
 
 public class EngineProducer extends UntypedActor {
-    ActorRef engineWorkshop;
+    private ActorRef engineWorkshop;
 
     public EngineProducer(ActorRef engineWorkshop) {
         this.engineWorkshop = engineWorkshop;
@@ -23,7 +23,7 @@ public class EngineProducer extends UntypedActor {
             } else {
                 engine = new Engine(true);
             }
-            System.out.println("engine produced:" + engine);
+//            System.out.println("engine produced:" + engine);
             engineWorkshop.tell(engine, this.getSelf());
         } else {
             unhandled(message);

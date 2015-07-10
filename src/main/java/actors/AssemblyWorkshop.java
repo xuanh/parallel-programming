@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class AssemblyWorkshop extends UntypedActor{
-    ActorRef factory;
-    List<Engine> engines = new ArrayList<>();
-    LinkedList<Wheel> wheels = new LinkedList<>();
+    private ActorRef factory;
+    private List<Engine> engines = new ArrayList<>();
+    private LinkedList<Wheel> wheels = new LinkedList<>();
 
     public AssemblyWorkshop(ActorRef factory) {
         this.factory = factory;

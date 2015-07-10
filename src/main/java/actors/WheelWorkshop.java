@@ -5,7 +5,7 @@ import akka.actor.UntypedActor;
 import messages.Wheel;
 
 public class WheelWorkshop extends UntypedActor{
-    ActorRef assembler;
+    private ActorRef assembler;
 
     public WheelWorkshop(ActorRef assembler) {
         this.assembler = assembler;

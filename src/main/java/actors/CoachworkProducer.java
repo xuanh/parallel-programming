@@ -6,7 +6,7 @@ import messages.Coachwork;
 import messages.Produce;
 
 public class CoachworkProducer extends UntypedActor{
-    ActorRef coachworkWorkshop;
+    private ActorRef coachworkWorkshop;
 
     public CoachworkProducer(ActorRef coachworkWorkshop) {
         this.coachworkWorkshop = coachworkWorkshop;
@@ -23,7 +23,7 @@ public class CoachworkProducer extends UntypedActor{
             } else {
                 coachwork = new Coachwork(true);
             }
-            System.out.println("coachwork produced:" + coachwork);
+//            System.out.println("coachwork produced:" + coachwork);
             coachworkWorkshop.tell(coachwork, this.getSelf());
         } else {
             unhandled(message);

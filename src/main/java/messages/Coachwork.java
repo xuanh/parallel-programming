@@ -1,13 +1,15 @@
 package messages;
 
+import java.util.UUID;
+
 public class Coachwork {
     private final String name = "Coachwork";
     private final boolean defected;
-    private final double serial;
+    private final UUID serial;
 
     public Coachwork(boolean defected) {
         this.defected = defected;
-        this.serial = System.currentTimeMillis() + Math.random() * 100;
+        this.serial = UUID.randomUUID();
     }
 
     public boolean isDefected() {
@@ -16,10 +18,6 @@ public class Coachwork {
 
     @Override
     public String toString() {
-        return "Coachwork{" +
-                "name='" + name + '\'' +
-                ", defected=" + defected +
-                ", serial=" + serial +
-                '}';
+        return "Coachwork{" + "name='" + name + '\'' + ", defected=" + defected + ", serial=" + serial + '}';
     }
 }

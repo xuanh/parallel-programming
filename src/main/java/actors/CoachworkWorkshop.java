@@ -5,7 +5,7 @@ import akka.actor.UntypedActor;
 import messages.Coachwork;
 
 public class CoachworkWorkshop extends UntypedActor{
-    ActorRef assembler;
+    private ActorRef assembler;
 
     public CoachworkWorkshop(ActorRef assembler) {
         this.assembler = assembler;

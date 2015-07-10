@@ -9,7 +9,10 @@ import actors.WheelWorkshop;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.actor.Scheduler;
+import messages.Count;
 import messages.Produce;
+import scala.concurrent.ExecutionContextExecutor;
 import scala.concurrent.duration.FiniteDuration;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +24,7 @@ public class CarFactory {
     }
 
     public void build() {
-        int defectPercentage = 5;
+        int defectPercentage = 0;
         ActorSystem system = ActorSystem.create("system");
         ActorRef factoryRef = system.actorOf(Props.create(FactoryActor.class));
         ActorRef assemblyRef = system.actorOf(Props.create(AssemblyWorkshop.class, factoryRef));
@@ -34,12 +37,15 @@ public class CarFactory {
         ActorRef coachworkWSRef = system.actorOf(Props.create(CoachworkWorkshop.class, assemblyRef));
         ActorRef coachworkProducerRef = system.actorOf(Props.create(CoachworkProducer.class, coachworkWSRef));
 
-        system.scheduler().schedule(FiniteDuration.apply(0, TimeUnit.SECONDS), FiniteDuration.apply(4, TimeUnit.SECONDS), engineProducerRef, new Produce(defectPercentage),
-                system.dispatcher(), engineProducerRef);
-        system.scheduler().schedule(FiniteDuration.apply(0, TimeUnit.SECONDS), FiniteDuration.apply(1, TimeUnit.SECONDS), wheelProducerRef, new Produce(defectPercentage),
-                system.dispatcher(), wheelProducerRef);
-        system.scheduler().schedule(FiniteDuration.apply(0, TimeUnit.SECONDS), FiniteDuration.apply(4, TimeUnit.SECONDS), coachworkProducerRef, new Produce(defectPercentage),
-                system.dispatcher(), coachworkProducerRef);
+        Scheduler scheduler = system.scheduler();
+        ExecutionContextExecutor dispatcher = system.dispatcher();
+        scheduler.schedule(FiniteDuration.apply(0, TimeUnit.MILLISECONDS), FiniteDuration.apply(4, TimeUnit.MILLISECONDS), engineProducerRef, new Produce(defectPercentage), dispatcher,
+                engineProducerRef);
+        scheduler.schedule(FiniteDuration.apply(0, TimeUnit.MILLISECONDS), FiniteDuration.apply(1, TimeUnit.MILLISECONDS), wheelProducerRef, new Produce(defectPercentage), dispatcher,
+                wheelProducerRef);
+        scheduler.schedule(FiniteDuration.apply(0, TimeUnit.MILLISECONDS), FiniteDuration.apply(4, TimeUnit.MILLISECONDS), coachworkProducerRef, new Produce(defectPercentage), dispatcher,
+                coachworkProducerRef);
+        scheduler.scheduleOnce(FiniteDuration.apply(1, TimeUnit.MINUTES), factoryRef, new Count(), dispatcher, factoryRef);
 
     }
 
